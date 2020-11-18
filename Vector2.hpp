@@ -1,32 +1,37 @@
+#pragma once
 #include <iostream>
-using namespace std;
 
-
-class Motor
+namespace Engine
 {
-
-private:
-   float X, Y;
-
-    //X=Distancia, Y=Tiempo
-
-    Motor(float X, float Y) : m_distancia(X), m_tiempo(Y)
-
-   {
-    cout << "La velocidad del motor es: " << m_distancia << " y " << m_tiempo << std::endl;
-   }
-
-    
-
-private:
-    int m_distancia, m_tiempo;
-
-
-        //Calcula la velocidad del motor
-
-public:
-    int velocidad()
+    namespace Math
     {
-        return m_distancia / m_tiempo;
-    }
-};
+        struct Vector2
+        {
+            /* ==========================
+            * STATIC
+            * ==========================*/
+            static Vector2 Origin;
+
+            /* ==========================
+            * CONSTRUCTORS
+            * ==========================*/
+            Vector2();
+            Vector2(float, float);
+            Vector2(float);
+
+            /* ==========================
+            * FUNCTIONS
+            * ==========================*/
+            float Length() const;
+            float SquaredLength() const;
+            float Normalize();
+
+            /* ==========================
+            * CONSTRUCTORS
+            * ==========================*/
+            float x;
+            float y;
+            float length;
+        };
+    } // namespace Math
+} // namespace Engine
