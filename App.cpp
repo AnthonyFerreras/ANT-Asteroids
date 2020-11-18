@@ -1,8 +1,4 @@
 #include "App.hpp"
-#include <iostream>
-#include <algorithm>
-
-#include "App.hpp"
 #include <algorithm>
 
 // OpenGL includes
@@ -56,7 +52,7 @@ namespace Engine
 		while (m_state == GameState::RUNNING)
 		{
 			// Input polling
-			
+			//
 			while (SDL_PollEvent(&event))
 			{
 				OnEvent(&event);
@@ -71,7 +67,7 @@ namespace Engine
 	bool App::Init()
 	{
 		// Init the external dependencies
-		
+		//
 		bool success = SDLInit() && GlewInit();
 		if (!success)
 		{
@@ -81,11 +77,11 @@ namespace Engine
 		}
 
 		// Setup the viewport
-		
+		//
 		SetupViewPort();
 
 		// Change game state
-		
+		//
 		m_state = GameState::INIT_SUCCESSFUL;
 
 		return true;
@@ -134,7 +130,7 @@ namespace Engine
 		double startTime = m_timer->GetElapsedTimeInSeconds();
 
 		// Update code goes here
-		
+		//
 		m_ship->Update(DESIRED_FRAME_TIME);
 
 		double endTime = m_timer->GetElapsedTimeInSeconds();
@@ -166,7 +162,7 @@ namespace Engine
 	bool App::SDLInit()
 	{
 		// Initialize SDL's Video subsystem
-		
+		//
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		{
 			SDL_Log("Failed to init SDL");
@@ -207,25 +203,25 @@ namespace Engine
 	void App::SetupViewPort()
 	{
 		// Defining ortho values
-		
+		//
 		float halfWidth = m_width * 0.5f;
 		float halfHeight = m_height * 0.5f;
 
 		// Set viewport to match window
-		
+		//
 		glViewport(0, 0, m_width, m_height);
 
 		// Set Mode to GL_PROJECTION
-		
+		//
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
 		// Set projection MATRIX to ORTHO
-		
+		//
 		glOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1, 1);
 
 		// Setting Mode to GL_MODELVIEW
-		
+		//
 		glMatrixMode(GL_MODELVIEW);
 	}
 

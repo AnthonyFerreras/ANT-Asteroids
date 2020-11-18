@@ -1,4 +1,4 @@
-// Space Combat
+/ Space Combat
 #include "TimeManager.hpp"
 
 // STL

@@ -154,7 +154,7 @@ namespace Engine
 
 		/* ===========BIG SHIP============*/
 
-		m_points.push_back(Math::Vector2(0, -12));
+	    m_points.push_back(Math::Vector2(0, -12));
 		m_points.push_back(Math::Vector2(4, -6));
 		m_points.push_back(Math::Vector2(5, -5));
 		m_points.push_back(Math::Vector2(6, -5));
@@ -195,13 +195,12 @@ namespace Engine
 		m_points.push_back(Math::Vector2(-9, 3));
 		m_points.push_back(Math::Vector2(-11, 4));
 		m_points.push_back(Math::Vector2(-12, 5));
-		m_points.push_back(Math::Vector2(-13, 7));
 		m_points.push_back(Math::Vector2(-13, 8));
 		m_points.push_back(Math::Vector2(-12, 10));
 		m_points.push_back(Math::Vector2(-11, 11));
 		m_points.push_back(Math::Vector2(-14, 10));
-        m_points.push_back(Math::Vector2(-17, 8));
-		m_points.push_back(Math::Vector2(-19, 6));
+		m_points.push_back(Math::Vector2(-17, 8));
+        m_points.push_back(Math::Vector2(-19, 6));
 		m_points.push_back(Math::Vector2(-20, 4));
 		m_points.push_back(Math::Vector2(-21, 1));
 		m_points.push_back(Math::Vector2(-21, -2));
@@ -211,35 +210,29 @@ namespace Engine
 		m_points.push_back(Math::Vector2(-14, -11));
 		m_points.push_back(Math::Vector2(-11, -12));
 		m_points.push_back(Math::Vector2(-12, -11));
-        m_points.push_back(Math::Vector2(-13, -9));
+		m_points.push_back(Math::Vector2(-13, -9));
 		m_points.push_back(Math::Vector2(-13, -8));
 		m_points.push_back(Math::Vector2(-12, -6));
 		m_points.push_back(Math::Vector2(-11, -5));
-		m_points.push_back(Math::Vector2(-10, -5));
 		m_points.push_back(Math::Vector2(-9, -6));
 		m_points.push_back(Math::Vector2(-8, -8));
-		m_points.push_back(Math::Vector2(-7, -6));
+        m_points.push_back(Math::Vector2(-7, -6));
 		m_points.push_back(Math::Vector2(-6, -5));
 		m_points.push_back(Math::Vector2(-5, -5));
-        m_points.push_back(Math::Vector2(-4, -6));
+		m_points.push_back(Math::Vector2(-4, -6));
 		m_points.push_back(Math::Vector2(0, -12));
-
 	}
-
-	    void Ship::Render()
-	    {
-		    glLoadIdentity();
-		    glTranslatef(m_position.x, m_position.y, 0.0);
-		    glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
-		    glBegin(GL_LINE_LOOP);
-		    std::vector<Math::Vector2>::iterator it = m_points.begin();
-
-		    for (; it != m_points.end(); ++it)
-		    {
-			    glVertex2f((*it).x, (*it).y);
-		    }
-
+	void Ship::Render()
+	{
+		glLoadIdentity();
+		glTranslatef(m_position.x, m_position.y, 0.0);
+		glRotatef(m_angle, 0.0f, 0.0f, 1.0f);
+		glBegin(GL_LINE_LOOP);
+		std::vector<Math::Vector2>::iterator it = m_points.begin();
+		for (; it != m_points.end(); ++it)
+		{
+			glVertex2f((*it).x, (*it).y);
+		}
 		glEnd();
-	    };
-        
+	};
 } // namespace Engine
