@@ -2,51 +2,40 @@
 #include <iostream>
 #include <algorithm>
 
-#include "App.hpp"
-#include <algorithm>
-
 // OpenGL includes
-#include <GL/glew.h>
+// #include <GL/glew.h>
 #include <SDL2/SDL_opengl.h>
-
-//
-#include "Ship.hpp"
-#include "Asteroid.hpp"
 
 namespace Engine
 {
 	const float DESIRED_FRAME_RATE = 60.0f;
 	const float DESIRED_FRAME_TIME = 1.0f / DESIRED_FRAME_RATE;
 
-	App::App(const std::string &title, const int width, const int height)
-		: m_title(title), m_width(width), m_height(height), m_nUpdates(0), m_timer(new TimeManager), m_mainWindow(nullptr)
+	App::App(const std::string& title, const int width, const int height)
+		: m_title(title)
+		, m_width(width)
+		, m_height(height)
+		, m_nUpdates(0)
+		, m_timer(new TimeManager)
+		, m_mainWindow(nullptr)
 	{
 		m_state = GameState::UNINITIALIZED;
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
-
-		m_ship = new Engine::Ship(this);
-		// m_asteroid = new Asteroid;
 	}
 
 	App::~App()
 	{
 		CleanupSDL();
 
-		// Removes timer allocation
-		delete m_timer;
-
-		// Removes ship allocation
-		delete m_ship;
-
-		// Removes asteroid
-		// delete m_asteroid;
+        // Removes timer allocation
+        delete m_timer;
 	}
 
 	void App::Execute()
 	{
 		if (m_state != GameState::INIT_SUCCESSFUL)
 		{
-			SDL_Log("Game INIT was not successful.");
+			std::cerr << "Game INIT was not successful." << std::endl;
 			return;
 		}
 
@@ -56,7 +45,7 @@ namespace Engine
 		while (m_state == GameState::RUNNING)
 		{
 			// Input polling
-			
+			//
 			while (SDL_PollEvent(&event))
 			{
 				OnEvent(&event);
@@ -71,46 +60,30 @@ namespace Engine
 	bool App::Init()
 	{
 		// Init the external dependencies
-		
+		//
 		bool success = SDLInit() && GlewInit();
 		if (!success)
 		{
 			m_state = GameState::INIT_FAILED;
-			SDL_Log("Game INIT failed.");
 			return false;
 		}
 
 		// Setup the viewport
-		
+		//
 		SetupViewPort();
 
 		// Change game state
-		
+		//
 		m_state = GameState::INIT_SUCCESSFUL;
 
 		return true;
 	}
 
 	void App::OnKeyDown(SDL_KeyboardEvent keyBoardEvent)
-	{
-		const float MOVE_UNIT = 15.f;
+	{		
 		switch (keyBoardEvent.keysym.scancode)
 		{
-		case SDL_SCANCODE_W:
-			SDL_Log("Going up");
-			m_ship->MoveUp();
-			break;
-		case SDL_SCANCODE_A:
-			SDL_Log("Going left");
-			m_ship->RotateLeft(DESIRED_FRAME_TIME);
-			break;
-		case SDL_SCANCODE_S:
-			break;
-		case SDL_SCANCODE_D:
-			SDL_Log("Going right");
-			m_ship->RotateRight(DESIRED_FRAME_TIME);
-			break;
-		default:
+		default:			
 			SDL_Log("%S was pressed.", keyBoardEvent.keysym.scancode);
 			break;
 		}
@@ -134,8 +107,7 @@ namespace Engine
 		double startTime = m_timer->GetElapsedTimeInSeconds();
 
 		// Update code goes here
-		
-		m_ship->Update(DESIRED_FRAME_TIME);
+		//
 
 		double endTime = m_timer->GetElapsedTimeInSeconds();
 		double nextTimeFrame = startTime + DESIRED_FRAME_TIME;
@@ -145,6 +117,8 @@ namespace Engine
 			// Spin lock
 			endTime = m_timer->GetElapsedTimeInSeconds();
 		}
+
+		//double elapsedTime = endTime - startTime;        
 
 		m_lastFrameTime = m_timer->GetElapsedTimeInSeconds();
 
@@ -156,9 +130,122 @@ namespace Engine
 		glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Render code goes here
-		m_ship->Render();
-		// m_asteroid->Render();
+
+
+/*2f es para dos dimensiones, es decir que entra dos valores
+estos valores van clock wise*/
+//this is the part where it draws in the screen//
+		
+		glBegin(GL_LINE_LOOP);
+        	/*
+			****** Little ship******
+								*/
+			/*
+			
+			glVertex2f(0.0, 20.0);
+			glVertex2f( 12.0,  -10.0);
+			glVertex2f( 6.0, -4.0);
+			glVertex2f( -6.0, -4.0);
+			glVertex2f( -12.0, -10.0);*/
+			
+			
+			/* 
+			
+			==***Kinda the one i wanted to make***==
+			glVertex2f(0.0, 90.0);
+			glVertex2f( 3.0,  84.0);
+			glVertex2f( 9.5, 84.0);
+			glVertex2f( 12.0, 78.0);
+			glVertex2f( 12.0, 60.0);
+			glVertex2f(60.0, 30.0);
+			glVertex2f( 60.0,  18.0);
+			glVertex2f( 12.0, 18.0);
+			glVertex2f( 7.2, 0.0);
+			glVertex2f( 0.0, 0.0);
+			glVertex2f(-7.2, 0.0);
+			glVertex2f( -12.0, 18.0);
+			glVertex2f( -60.0, 18.0);
+			glVertex2f( -60.0, 30.0);
+			glVertex2f( -12.0, 60.0);
+			glVertex2f(-12.0, 78.0);
+			glVertex2f( -9.5,  84.0);
+			glVertex2f( -3.0, 84.0);
+			glVertex2f( 0.0, 90.0);
+			*/
+/*
+         ===========BIG SHIP============
+*/
+			glVertex2f(0, -12);
+            glVertex2f(4, -6);
+            glVertex2f(5, -5);
+            glVertex2f(6, -5);
+			glVertex2f(7, -6);
+            glVertex2f(8, -8);
+            glVertex2f(9, -6);
+            glVertex2f(10, -5);
+            glVertex2f(11, -5);
+            glVertex2f(12, -6);
+            glVertex2f(13, -8);
+            glVertex2f(13, -9);
+            glVertex2f(12, -11);
+            glVertex2f(11, -12);
+			glVertex2f(14, -11);
+            glVertex2f(17, -9);
+            glVertex2f(19, -7);
+            glVertex2f(20, -5);
+            glVertex2f(21, -2);
+            glVertex2f(21, 1);
+            glVertex2f(20, 4);
+			glVertex2f(17, 8);
+            glVertex2f(14, 10);
+            glVertex2f(11, 11);
+            glVertex2f(12, 10);
+            glVertex2f(13, 8);
+            glVertex2f(13, 7);
+            glVertex2f(12, 5);
+			glVertex2f(11, 4);
+            glVertex2f(9, 3);
+            glVertex2f(6, 3);
+            glVertex2f(3, 4);
+			glVertex2f(3, 12);
+            glVertex2f(1, 9);
+            glVertex2f(-1, 9);
+            glVertex2f(-3, 12);
+            glVertex2f(-3, 4);
+            glVertex2f(-6, 3);
+            glVertex2f(-9, 3);
+            glVertex2f(-11, 4);
+            glVertex2f(-12, 5);
+            glVertex2f(-13, 7);
+			glVertex2f(-13, 8);
+            glVertex2f(-12, 10);
+            glVertex2f(-11, 11);
+            glVertex2f(-14, 10);
+            glVertex2f(-17, 8);
+            glVertex2f(-19, 6);
+            glVertex2f(-20, 4);
+			glVertex2f(-21, 1);
+            glVertex2f(-21, -2);
+            glVertex2f(-20, -5);
+            glVertex2f(-19, -7);
+            glVertex2f(-17, -9);
+            glVertex2f(-14, -11);
+            glVertex2f(-11, -12);
+            glVertex2f(-12, -11);
+            glVertex2f(-13, -9);
+            glVertex2f(-13, -8);
+			glVertex2f(-12, -6);
+            glVertex2f(-11, -5);
+            glVertex2f(-10, -5);
+            glVertex2f(-9, -6);
+            glVertex2f(-8, -8);
+            glVertex2f(-7, -6);
+            glVertex2f(-6, -5);
+            glVertex2f(-5, -5);
+            glVertex2f(-4, -6);
+            glVertex2f(0, -12);
+
+		glEnd();
 
 		SDL_GL_SwapWindow(m_mainWindow);
 	}
@@ -166,19 +253,19 @@ namespace Engine
 	bool App::SDLInit()
 	{
 		// Initialize SDL's Video subsystem
-		
+		//
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		{
-			SDL_Log("Failed to init SDL");
+			std::cerr << "Failed to init SDL" << std::endl;
 			return false;
 		}
 
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-		Uint32 flags = SDL_WINDOW_OPENGL |
-					   SDL_WINDOW_SHOWN |
-					   SDL_WINDOW_RESIZABLE;
+		Uint32 flags =  SDL_WINDOW_OPENGL     | 
+						SDL_WINDOW_SHOWN      | 
+						SDL_WINDOW_RESIZABLE;
 
 		m_mainWindow = SDL_CreateWindow(
 			m_title.c_str(),
@@ -186,11 +273,12 @@ namespace Engine
 			SDL_WINDOWPOS_CENTERED,
 			m_width,
 			m_height,
-			flags);
+			flags
+		);
 
 		if (!m_mainWindow)
 		{
-			SDL_Log("Failed to create window!");
+			std::cerr << "Failed to create window!" << std::endl;
 			SDL_Quit();
 			return false;
 		}
@@ -207,25 +295,25 @@ namespace Engine
 	void App::SetupViewPort()
 	{
 		// Defining ortho values
-		
+		//
 		float halfWidth = m_width * 0.5f;
-		float halfHeight = m_height * 0.5f;
+		float halfHeight = m_height * 0.5f;  //f means float, you are telling the program you are workin with a float
 
 		// Set viewport to match window
-		
+		//
 		glViewport(0, 0, m_width, m_height);
 
 		// Set Mode to GL_PROJECTION
-		
+		//
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
 		// Set projection MATRIX to ORTHO
-		
+		//
 		glOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1, 1);
 
 		// Setting Mode to GL_MODELVIEW
-		
+		//
 		glMatrixMode(GL_MODELVIEW);
 	}
 
@@ -271,4 +359,4 @@ namespace Engine
 		//
 		CleanupSDL();
 	}
-} // namespace Engine
+}
