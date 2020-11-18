@@ -4,7 +4,7 @@
 
 class Car
 {
-public:
+    public:
     /*
      * CONST
      */
@@ -34,7 +34,7 @@ public:
         std::cout << "The car make " << m_make << " goes from 0 to 60 in: " << m_time << " seconds. With a max speed of " << m_speed << "km/h" << std::endl;
     }
 
-private:
+    private:
     float m_time;
     int m_speed;
     std::string m_make;
